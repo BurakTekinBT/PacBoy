@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pickable : MonoBehaviour
@@ -19,8 +20,23 @@ public class Pickable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Player")
+        {
+            ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+            scoreManager.score += gainScore;
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
         ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
         scoreManager.score += gainScore;
         Destroy(gameObject);
+        }
+   
     }
 }
+
